@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 
 import assets from '../assets/assets' 
 // import Themebtn from './themebtn'
-import ThemeBtn from './themebtn'
 import { motion } from "motion/react"
 import ThemeBtn from './themebtn'
 
