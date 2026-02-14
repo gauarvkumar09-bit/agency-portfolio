@@ -1,6 +1,7 @@
 import React, { use, useEffect, useRef, useState } from 'react'
 import Navbar from './components/Navbar'
-import Hero from './components/hero'
+// import Hero from './components/hero'
+import Hero from './components/Hero.jsx'
 import TrustedBy from './components/TrustedBy';
 import Services from './components/services';
 import Ourwork from './components/Ourwork';
