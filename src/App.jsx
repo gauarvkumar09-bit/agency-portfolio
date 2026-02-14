@@ -2,13 +2,13 @@ import React, { use, useEffect, useRef, useState } from 'react'
 import Navbar from './components/Navbar'
 // import Hero from './components/hero'
 import Hero from './components/Hero.jsx'
-import TrustedBy from './components/TrustedBy';
-import Services from './components/services';
-import Ourwork from './components/Ourwork';
-import Teams from './components/Teams';
-import Contactus from './components/Contactus';
-import {Toaster} from "react-hot-toast"
-import Footer from './components/footer';
+import TrustedBy from './components/TrustedBy.jsx';
+import Services from './components/Services.jsx';
+import Ourwork from './components/Ourwork.jsx';
+import Teams from './components/Teams.jsx';
+import Contactus from './components/Contactus.jsx';
+import {Toaster} from "react-hot-toast";
+import Footer from './components/Footer.jsx';
 
 
 
