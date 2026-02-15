@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import assets from '../assets/assets' 
 
 import { motion } from "motion/react"
-import ThemeBtn from './themebtn.jsx'
+import ThemeBtn from './Themebtn.jsx'
 
 const Navbar = ({theme, setTheme}) => {
 
