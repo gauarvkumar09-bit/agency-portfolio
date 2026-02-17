@@ -29,7 +29,7 @@ const position=useRef({
   y:0
 })
 useEffect(()=>{
-  // 👉 detect touch / mobile device
+  //  detect touch / mobile device
   const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
   if (isTouchDevice) {
     if (dotRef.current) dotRef.current.style.display = "none";
