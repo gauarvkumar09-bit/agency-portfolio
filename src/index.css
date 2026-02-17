@@ -16,6 +16,12 @@
   --color-primary: #5044E5;
 } 
 
+@media (max-width: 768px) {
+  .parent {
+    flex-direction: column;
+  }
+}
+
 
 
 

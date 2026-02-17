@@ -29,6 +29,13 @@ const position=useRef({
   y:0
 })
 useEffect(()=>{
+  // 👉 detect touch / mobile device
+  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+  if (isTouchDevice) {
+    if (dotRef.current) dotRef.current.style.display = "none";
+    if (outlineRef.current) outlineRef.current.style.display = "none";
+    return; // stop effect here
+  }
 const mouseMoveHandler=(e)=>{
   mouse.current.x=e.clientX;
   mouse.current.y=e.clientY;

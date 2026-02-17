@@ -11,7 +11,7 @@ const Footer = ({theme}) => {
     viewport={{once:true}}
     
     className='bg-slate-50 dark:bg-gray-900 pt-10 sm:pt-10 mt-20 sm:pt-40 px-4 sm:px-10 lg:px-24 xl:px-40'>
-        <div className='flex justify-between lg:items-center max-lg:flex-cols gap-10'>
+        <div class="parent" className='flex justify-between  lg:items-center max-lg:flex-cols gap-10'>
             <motion.div
             initial={{opacity:0, y:30}}
             whileInView={{opacity:1, y:0}}
