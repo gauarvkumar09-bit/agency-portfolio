@@ -1,98 +1,111 @@
-import React, { use, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Navbar from './components/Navbar'
-// import Hero from './components/hero'
 import Hero from './components/Hero.jsx'
 import TrustedBy from './components/TrustedBy.jsx';
 import Services from './components/Services.jsx';
 import Ourwork from './components/Ourwork.jsx';
 import Teams from './components/Teams.jsx';
 import Contactus from './components/Contactus.jsx';
-import {Toaster} from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import Footer from './components/Footer.jsx';
-
-
 
 const App = () => {
 
-const [theme, setTheme]=useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "light" );
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || "light"
+  );
 
-  const dotRef=useRef(null)
-const outlineRef=useRef(null)
-//refrence for custom curser
+  const [isTouch, setIsTouch] = useState(false);
 
-const mouse=useRef({
-  x:0,
-  y:0
-})
-const position=useRef({
-  x:0,
-  y:0
-})
-useEffect(()=>{
-  //  detect touch / mobile device
-  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-  if (isTouchDevice) {
-    if (dotRef.current) dotRef.current.style.display = "none";
-    if (outlineRef.current) outlineRef.current.style.display = "none";
-    return; // stop effect here
-  }
-const mouseMoveHandler=(e)=>{
-  mouse.current.x=e.clientX;
-  mouse.current.y=e.clientY;
-}
-document.addEventListener("mousemove",mouseMoveHandler);
+  const dotRef = useRef(null);
+  const outlineRef = useRef(null);
 
-const animate =()=>{
-  position.current.x +=(mouse.current.x - position.current.x) *0.15;
-  position.current.y +=(mouse.current.y - position.current.y) *0.15;
-  if(dotRef.current && outlineRef.current){
-    dotRef.current.style.transform = `translate3d(${mouse.current.x-6}px, ${mouse.current.y -6}px,0)`;
-        outlineRef.current.style.transform = `translate3d(${position.current.x-20}px, ${position.current.y -20}px,0)`;
-}
-requestAnimationFrame(animate);
-}
-animate();
+  const mouse = useRef({ x: 0, y: 0 });
+  const position = useRef({ x: 0, y: 0 });
 
-return()=>{
-  document.removeEventListener("mousemove",mouseMoveHandler)
-}
-},[])
+  // detect touch device
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
 
+  // apply theme
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
+  // cursor effect (desktop only)
+  useEffect(() => {
+    if (isTouch) return;
 
+    const mouseMoveHandler = (e) => {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+    };
+
+    document.addEventListener("mousemove", mouseMoveHandler);
+
+    let rafId;
+
+    const animate = () => {
+      position.current.x += (mouse.current.x - position.current.x) * 0.15;
+      position.current.y += (mouse.current.y - position.current.y) * 0.15;
+
+      if (dotRef.current && outlineRef.current) {
+        dotRef.current.style.transform =
+          `translate3d(${mouse.current.x - 6}px, ${mouse.current.y - 6}px,0)`;
+
+        outlineRef.current.style.transform =
+          `translate3d(${position.current.x - 20}px, ${position.current.y - 20}px,0)`;
+      }
+
+      rafId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      document.removeEventListener("mousemove", mouseMoveHandler);
+      cancelAnimationFrame(rafId);
+    };
+  }, [isTouch]);
 
   return (
- <div className='dark:bg-black relative'>
+    <div className='dark:bg-black relative overflow-x-hidden'>
 
-{/* <Toaster /> */}
-<Toaster
-  position="center-top"
-  toastOptions={{
-    style: {
-      background: '#333',
-      color: '#fff',
-    },
-  }}
-/>
+      <Toaster
+        position="center-top"
+        toastOptions={{
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        }}
+      />
 
-
-      <Navbar theme={theme} setTheme={setTheme}/>
+      <Navbar theme={theme} setTheme={setTheme} />
       <Hero />
       <TrustedBy />
       <Services />
       <Ourwork />
       <Teams />
       <Contactus />
-      <Footer theme={theme}  />
-      {/* Custom cursor */}
-      <div ref={outlineRef} className='fixed top-0 left-0 h-10 w-10  rounded-full border border-primary pointer-events-none z-[9999]
-      style={transition="transform 0.1s ease-out"}'>
-      
-      </div>
-        {/* Cursor dot */}
-        <div ref={dotRef} className='fixed top-0 left-0 h-3 w-3  rounded-full  bg-primary pointer-events-none z-[9999]'>
+      <Footer theme={theme} />
 
-        </div>
+      {/* ✅ Cursor — render only desktop */}
+      {!isTouch && (
+        <>
+          <div
+            ref={outlineRef}
+            className='fixed top-0 left-0 h-10 w-10 rounded-full border border-primary pointer-events-none z-[9999]'
+            style={{ transition: "transform 0.1s ease-out" }}
+          />
+          <div
+            ref={dotRef}
+            className='fixed top-0 left-0 h-3 w-3 rounded-full bg-primary pointer-events-none z-[9999]'
+          />
+        </>
+      )}
 
     </div>
   )
